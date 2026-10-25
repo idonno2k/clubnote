@@ -31,12 +31,19 @@ h1{font-size:24px;margin:16px 0 4px}
 .box b{color:var(--pri)}
 .hide{display:none}
 .ok{background:#e8f6ec;color:#1e7a3c;font-weight:700;text-align:center}
+#splash{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:var(--bg);z-index:5;transition:opacity .3s}
+body.app #splash{display:flex}
+#splash img{width:96px;height:96px;border-radius:22px;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+#splash p{margin:0;color:var(--mute);font-size:15px}
+.spin{width:28px;height:28px;border:3px solid #d5dbe3;border-top-color:var(--pri);border-radius:50%;animation:sp 0.8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
 #arrow{position:fixed;left:50%;bottom:6px;transform:translateX(-50%);font-size:44px;animation:bob 1s infinite;display:none}
 @keyframes bob{50%{transform:translate(-50%,10px)}}
 </style>
 </head>
 <body>
 <iframe id="app" title="어와나 클럽노트" allow="clipboard-write"></iframe>
+<div id="splash"><img src="icon-512.png?v=2" alt=""><div class="spin"></div><p>클럽노트를 여는 중…</p></div>
 
 <div id="land">
   <img src="icon-512.png?v=2" alt="">
@@ -75,6 +82,10 @@ if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catc
 if (standalone || /[?&]app=1/.test(location.search)) {
   // 설치한 앱(또는 '바로 열기') → 클럽노트를 화면 가득
   document.body.className = "app";
+  // 시작 화면: 웹앱이 다 뜰 때까지 아이콘·도는 표시 (흰 화면 대신, 2026-10-25)
+  var hideSplash = function(){ var s = $("splash"); if (!s || s.style.opacity === "0") return; s.style.opacity = "0"; setTimeout(function(){ s.style.display = "none"; }, 300); };
+  $("app").onload = hideSplash;
+  setTimeout(hideSplash, 20000);
   $("app").src = APP + "?from=app";   // 웹앱이 📲 설치 버튼을 숨김
 } else if (kakao) {
   // 카톡 안 브라우저 → 크롬(안드로이드)·사파리(아이폰)로 자동으로 넘김
