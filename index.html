@@ -75,7 +75,7 @@ if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catc
 if (standalone || /[?&]app=1/.test(location.search)) {
   // 설치한 앱(또는 '바로 열기') → 클럽노트를 화면 가득
   document.body.className = "app";
-  $("app").src = APP;
+  $("app").src = APP + "?from=app";   // 웹앱이 📲 설치 버튼을 숨김
 } else if (kakao) {
   // 카톡 안 브라우저 → 크롬(안드로이드)·사파리(아이폰)로 자동으로 넘김
   var here = location.href.split("#")[0];
