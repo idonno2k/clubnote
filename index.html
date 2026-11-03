@@ -20,6 +20,9 @@
 :root{color-scheme:only light;--pri:#21507a;--bg:#f6f7f9;--ink:#1d2330;--mute:#6b7280;--gold:#ffd400}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+/* 당겨서 새로고침 막기 (2026-11-03): 화면 끝에서 더 당기면 앱 전체가 다시 열려 첫 화면으로 돌아가던 것 */
+html,body{overscroll-behavior:none}
+body.app{overflow:hidden}
 #app{position:fixed;inset:0;width:100%;height:100%;border:0;display:none;background:#fff}
 body.app #app{display:block}body.app #land{display:none}
 #land{max-width:440px;margin:0 auto;padding:32px 16px 48px;text-align:center}
